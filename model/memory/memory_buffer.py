@@ -40,9 +40,9 @@ class MemoryBuffer:
     action_tensor = torch.empty((batch_size, *batch[0][2].shape), dtype=torch.float)
     reward_tensor = torch.empty((batch_size, *batch[0][3].shape), dtype=torch.float)
     next_obs_conv_tensor = torch.empty((batch_size, *batch[0][4].shape), dtype=torch.float)
-    next_obs_fc_tensor = torch.empty((batch_size, *batch[0][4].shape), dtype=torch.float)
-    alive = torch.empty((batch_size, *batch[0][6].shape), dtype=torch.float)
-    next_alive = torch.empty((batch_size, *batch[0][7].shape), dtype=torch.float)
+    next_obs_fc_tensor = torch.empty((batch_size, *batch[0][5].shape), dtype=torch.float)
+    alive_tensor = torch.empty((batch_size, *batch[0][6].shape), dtype=torch.float)
+    next_alive_tensor = torch.empty((batch_size, *batch[0][7].shape), dtype=torch.float)
 
     for i, (obs_conv, obs_fc, action, reward, next_obs_conv, next_obs_fc, alive, next_alive) in enumerate(batch):
       obs_conv_tensor[i] = obs_conv
@@ -51,8 +51,8 @@ class MemoryBuffer:
       reward_tensor[i] = torch.tensor(reward)
       next_obs_conv_tensor[i] = next_obs_conv
       next_obs_fc_tensor[i] = next_obs_fc
-      alive[i] = alive
-      next_alive[i] = next_alive
+      alive_tensor[i] = alive
+      next_alive_tensor[i] = next_alive
 
     return (
       obs_conv_tensor,
@@ -61,8 +61,8 @@ class MemoryBuffer:
       reward_tensor,
       next_obs_conv_tensor,
       next_obs_fc_tensor,
-      alive,
-      next_alive,
+      alive_tensor,
+      next_alive_tensor,
     )
 
   def __len__(self):

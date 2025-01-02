@@ -37,10 +37,18 @@ class CNN(BaseNN):
 
       return x
 
-  def _sample_actions(self, conv_tensor: torch.Tensor, fc_tensor: torch.Tensor) -> PlayerActionBatch:
+  def _sample_actions(self, conv_tensor: torch.Tensor, fc_tensor: torch.Tensor, epsilon: float) -> PlayerActionBatch:
     batch_size = conv_tensor.size(0)
-    out = self.forward(conv_tensor, fc_tensor)
+    
+    rand_mask = torch.rand((batch_size)) < epsilon
     actions = torch.zeros((batch_size, 16, 3), dtype=torch.int32)
-    actions[:, :, 0] = out.argmax(2).int()
+
+    if rand_mask.all():
+      actions[:, :, 0] = torch.randint(0, 5, actions[:, :, 0].shape[:2], dtype=torch.int32)
+      return actions.numpy()
+
+    out = self.forward(conv_tensor, fc_tensor)
+    actions[~rand_mask, :, 0] = out.argmax(2).int()
+    actions[rand_mask, :, 0] = torch.randint(0, 5, actions[rand_mask, :, 0].shape[:2], dtype=torch.int32)
 
     return actions.numpy()

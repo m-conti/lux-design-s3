@@ -1,3 +1,4 @@
+from tqdm import tqdm
 from loop import Loop
 from model.agents import BasicAgent
 from model.networks import CNN
@@ -5,7 +6,6 @@ from model.memory import MemoryBuffer
 from torch import optim
 
 def main(
-  monitoring: bool,
   lr: float,
 ):
 
@@ -13,14 +13,27 @@ def main(
     AgentInit=BasicAgent,
     ModelInit=CNN,
     optimizer=optim.Adam,
-    memory=MemoryBuffer(limit=1000),
+    memory=MemoryBuffer(limit=50_000),
     lr=lr,
-    monitoring=monitoring,
+    log_name="with-epsilon-greedy",
   )
 
-  loop.session(10)
+  min_epsilon = 0.1
+  max_epsilon = 0.9
+  max_episodes = 200
 
-  pass
+  for i in tqdm(range(1, max_episodes + 1)):
+    epsilon = max(min_epsilon, max_epsilon - (max_epsilon - min_epsilon) * (i / (0.4 * max_episodes)))
+    loop.session(10, epsilon)
+    loop.train(10, 128)
+
+
+    if i % 2 == 0:
+      print(f"{loop.logger} | epsilon: {epsilon}")
+      loop.logger.log()
+
+    if i % 20 == 0:
+      loop.record()
 
 
 def init(
@@ -42,7 +55,6 @@ def init(
 if __name__ == "__main__":
   init(
     profiling=False,
-    monitoring=True,
     lr=0.001,
   )
   pass

@@ -25,12 +25,12 @@ class BaseNN(nn.Module):
     return new
 
   @abstractmethod
-  def _sample_actions(self, conv_tensor: torch.Tensor, fc_tensor: torch.Tensor) -> PlayerActionBatch:
+  def _sample_actions(self, conv_tensor: torch.Tensor, fc_tensor: torch.Tensor, epsilon: float) -> PlayerActionBatch:
     pass
 
   @torch.no_grad()
-  def sample_actions(self, conv_tensor: torch.Tensor, fc_tensor: torch.Tensor) -> PlayerActionBatch:
-    return self._sample_actions(conv_tensor, fc_tensor)
+  def sample_actions(self, conv_tensor: torch.Tensor, fc_tensor: torch.Tensor, epsilon: float) -> PlayerActionBatch:
+    return self._sample_actions(conv_tensor, fc_tensor, epsilon)
   
-  def sample_one_action(self, conv_tensor: torch.Tensor, fc_tensor: torch.Tensor) -> PlayerAction:
-    return cast(PlayerAction, self.sample_actions(conv_tensor.unsqueeze(0), fc_tensor.unsqueeze(0)).squeeze(0))
+  def sample_one_action(self, conv_tensor: torch.Tensor, fc_tensor: torch.Tensor, epsilon: float) -> PlayerAction:
+    return cast(PlayerAction, self.sample_actions(conv_tensor.unsqueeze(0), fc_tensor.unsqueeze(0), epsilon).squeeze(0))

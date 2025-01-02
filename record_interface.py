@@ -37,6 +37,9 @@ class RecordInterface(gym.Wrapper):
     self.episode_steps = 0
     Path(save_dir).mkdir(parents=True, exist_ok=True)
 
+  def __del__(self):
+    self.close()
+
   def reset(  # type: ignore
       self, *, seed: int | None = None, options: dict[str, Any] | None = None
   ) -> tuple[GodObs, GameParams]:
