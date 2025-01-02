@@ -1,0 +1,23 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+# MacOs
+.DS_Store
+
+# Distribution / packaging
+build/
+dist/
+.venv/
+*.egg-info/
+*.egg
+
+# PyTorch specific
+*.pt
+*.pth
+
+# WandB files
+wandb/
+
+# Records of training process
+records/

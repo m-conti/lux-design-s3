@@ -1,0 +1,2 @@
+TRAINING_DEVICE = "mps"
+SAMPLING_DEVICE = "cpu"
