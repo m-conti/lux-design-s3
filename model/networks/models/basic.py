@@ -9,6 +9,7 @@ from game_interface import n_actions, PlayerActionBatch
 class CNN(BaseNN):
   def __init__(self, conv_size: int, fc_size: int):
       super().__init__(conv_size, fc_size)
+      self.save_name = "cnn"
 
       size_out_1 = conv_size * 4
       self.conv1 = nn.Conv2d(conv_size, size_out_1, 3)

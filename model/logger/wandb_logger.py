@@ -9,6 +9,7 @@ class WandbLogger:
   fps: list
   scores: list
   episode = 0
+  epsilon: float = 0.0
   train_loss: float = 0.0
 
   def __init__(self,config: dict[str, Any], name: str):
@@ -25,6 +26,7 @@ class WandbLogger:
       'train-loss': self.train_loss,
       'fps': self.get_fps(),
       'score': self.get_score(),
+      'epsilon': self.epsilon,
     }
     self.run.log(metrics, step=self.step)
     self.step += 1
@@ -44,7 +46,7 @@ class WandbLogger:
     return sum(self.fps) / len(self.fps) if len(self.fps) > 0 else 0
   
   def __str__(self) -> str:
-    return f"FPS: {self.get_fps()} | Score: {self.get_score()} | Buffer Size: {self.buffer_size} | Train Loss: {self.train_loss}"
+    return f"FPS: {self.get_fps()} | Score: {self.get_score():.2f} | Buffer Size: {self.buffer_size} | Train Loss: {self.train_loss:.6f} | Epsilon: {self.epsilon:.2f}"
   
   def get_score(self):
     return sum(self.scores) / len(self.scores) if len(self.scores) > 0 else 0
@@ -56,6 +58,10 @@ class WandbLogger:
 
   def set_train(self, train_loss: float):
     self.train_loss = train_loss
+
+  def set_data(self, epsilon: float, buffer_size: int):
+    self.epsilon = epsilon
+    self.buffer_size = buffer_size
 
   def __del__(self):
     self.finish()

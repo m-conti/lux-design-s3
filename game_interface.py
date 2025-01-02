@@ -6,6 +6,8 @@ from numpy.typing import NDArray
 import numpy as np
 
 n_actions = 5
+unit_max_energy = 400
+map_max_energy = 20
 map_size = (24, 24)
 
 @dataclass(frozen=True)

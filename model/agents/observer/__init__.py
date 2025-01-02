@@ -1,4 +1,5 @@
 from .base import ObserverBase
-from .models.energy import MapEnergyObserver
-from .models.player import PlayerObserver
-__all__ = ['ObserverBase', 'MapEnergyObserver', 'PlayerObserver']
+from .models.map_energy import MapEnergyObserver
+from .models.unit_position import UnitPositionObserver
+from .models.unit_energy import UnitEnergyObserver
+__all__ = ['ObserverBase', 'MapEnergyObserver', 'UnitPositionObserver', 'UnitEnergyObserver']

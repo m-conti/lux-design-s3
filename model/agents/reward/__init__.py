@@ -1,3 +1,4 @@
 from .base import RewardBase, RewardData
 from .models.exploration import RewardExploration
-__all__ = ['RewardBase', 'RewardData', 'RewardExploration']
+from .models.energy import RewardEnergy
+__all__ = ['RewardBase', 'RewardData', 'RewardExploration', 'RewardEnergy']

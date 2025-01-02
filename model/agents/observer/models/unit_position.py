@@ -4,7 +4,7 @@ from ..base import ObserverBase
 from game_interface import Obs, map_size
 
 
-class PlayerObserver(ObserverBase):
+class UnitPositionObserver(ObserverBase):
   def __init__(self, player_id: int):
     self.player = player_id
     super().__init__()

@@ -13,6 +13,7 @@ class BaseNN(nn.Module):
       super().__init__()
       self.conv_size = conv_size
       self.fc_size = fc_size
+      self.save_name = "base_nn"
   
   @classmethod
   def from_tensors(cls, conv_source: torch.Tensor, fc_source: torch.Tensor) -> 'BaseNN':
